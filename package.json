@@ -1,29 +1,35 @@
 {
-  "name": "md-links",
+  "name": "nsquezadam/md-links",
   "version": "0.1.0",
-  "description": "## Índice",
+  "description": "",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nsquezadam/SCL014-md-links.git"
   },
-  "author": "",
+  "author": "Natalia Quezada",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nsquezadam/SCL014-md-links/issues"
   },
   "homepage": "https://github.com/nsquezadam/SCL014-md-links#readme",
   "dependencies": {
-    "chalk": "^3.0.0",
+    "cli-table3": "^0.6.0",
     "colors": "^1.4.0",
+    "fetch": "^1.1.0",
     "markdown-it": "^12.0.2",
+    "markdown-link-extractor": "^1.2.6",
     "marked": "^1.2.3",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6"
-  }
+  },
+  "devDependencies": {},
+  "keywords": []
 }

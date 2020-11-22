@@ -1,5 +1,5 @@
 const readFileMd = require('./readFileMd')
-
+// "start": "node src/mdLinks.js"
 const process = require('process');
 // archivo
 const file = process.argv[2]
@@ -44,7 +44,7 @@ readFileMd.readFileMd(file)
    else if(option === '--stats' ){
     readFileMd.readFileMd(file)
   //   readFileAndValidate.readFileAndValidate(file)
-   }else if(option === '--stats'){
+   }else if(option === '--stats' && option2 === '--validate' ){
     readFileMd.readFileMd(file)
   //   readFileAndValidate.readFileAndValidate(file)
    }
