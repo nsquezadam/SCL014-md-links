@@ -33,7 +33,7 @@ if (path.extname(file) != '.md'){
 }
 else{
   console.log(colors.blue('Leyendo...\nLinks Encontrados'))
-  if(option !== '--validate'){
+  if(option !== '--validate' &&  option !== '--stats'){
 
 readFileMd.readFileMd(file)
   }
@@ -44,7 +44,7 @@ readFileMd.readFileMd(file)
    else if(option === '--stats' ){
     readFileMd.readFileMd(file)
   //   readFileAndValidate.readFileAndValidate(file)
-   }else if(option === '--stats' && option2 === '--validate'){
+   }else if(option === '--stats'){
     readFileMd.readFileMd(file)
   //   readFileAndValidate.readFileAndValidate(file)
    }

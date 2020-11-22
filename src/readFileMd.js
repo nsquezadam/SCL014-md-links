@@ -18,9 +18,8 @@ const { error, Console } = require('console');
 const renderer = new marked.Renderer();
 
 const fetch = require('node-fetch');// manipula los http peticiones y respuestas 400 y 200
-const { rejects } = require('assert');
-// let fetch = require("fetch");
-// let fetchUrl = fetch.fetchUrl;
+let Fetch = require("fetch");
+let fetchUrl = Fetch.fetchUrl;
 // para desintalar paquetes NO OLVIDAR LIMPIAR npm uninstall <package name>
 // leer archivos
 // filtrar links por con htpp
@@ -83,17 +82,17 @@ const readFileMd = (error) => {
           return;
 
         }
-        else if(option === '--validate'){
+        else if(option === '--validate' ){
           validateLinks(arrayLinksOnlyHttp)
           return;
 
         } else if(option === '--stats' ){
-          totalAndUniquesAndBrokenLinks(arrayLinksOnlyHttp)
+          //totalAndUniquesAndBrokenLinks(arrayLinksOnlyHttp)
           totalAndUniquesLinks(arrayLinksOnlyHttp)
           return;
         }
         else if(option === '--stats' && option2 === '--validate' ){
-          //totalAndUniquesAndBrokenLinks(arrayLinksOnlyHttp)
+          totalAndUniquesAndBrokenLinks(arrayLinksOnlyHttp)
           return;
         }
         //let options
@@ -179,25 +178,8 @@ const totalAndUniquesLinks = (arrayLinksOnlyHttp) => {
   return console.log(table.toString())
 };
 
-const broken = (arrayLinksOnlyHttp)=>{
-  let arrayValidatedBroken  = arrayLinksOnlyHttp.map((item) => new Promise((resolve) => {
-    fetch(item.link)
-    .then((res) => {
-      if(res.status >= 400){
-        return  arraybroken.push(item)
-
-      }
-      resolve
-    })
-    .catch((error)=>{
-       console.log(erro);
-    })
-
-    }))
-    return arrayValidatedBroken.length
 
 
-  }
 const totalAndUniquesAndBrokenLinks = (arrayLinksOnlyHttp) => {
 return new Promise ((reject, resolve)=>{
 
@@ -205,8 +187,17 @@ if(arrayLinksOnlyHttp.length === 0 ){
       reject('No hay Links')
     }
     else{
-  let broken = broken(arrayLinksOnlyHttp)
+      const broken = (arrayLinksOnlyHttp) => {
+        let arrayBroken =[]
+        validateLinks(arrayLinksOnlyHttp).map((item) => {
+          if(item.status >= 400){
+            arrayBroken.push(item)
+          }
+        })
+        return arrayBroken.length
+      }
 
+  const brokenstats = broken(arrayLinksOnlyHttp)
   const total =  arrayLinksOnlyHttp.length
   const uniques = new Set(arrayLinksOnlyHttp.map((item) => item.link)).size;
   resolve
@@ -214,7 +205,7 @@ if(arrayLinksOnlyHttp.length === 0 ){
     head:[colors.yellow('Links Totales'),colors.yellow('Links Unicos'),colors.yellow('Links Rotos')],
     colWidths: [50,50,50]
   })
-    table.push([ colors.magenta(total), colors.magenta(uniques),colors.red(broken)])
+    table.push([ colors.magenta(total), colors.magenta(uniques),colors.red(brokenstats)])
 
    return console.log(table.toString())
 
