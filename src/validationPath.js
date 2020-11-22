@@ -1,38 +1,50 @@
-const fs = require('fs');
-const { resolve } = require('path');
-const path = require('path')
-const chalk = require('chalk');
-
-let myPath = '../';
-//let myPath = './pruebaSearch';
-//let myPath ='../../SCL014-MD-LINKS'
-// tranformacion y arreglo de ruta
-//console.log(path.Relative('../SCL014-MD-LINKS'))
-
-//const myPath = path.isAbsolute('../SCL014-MD-LINKS');
-//let  myPath = ('../SCL014-MD-LINKS');
-//let myPath = '/Users/Naty/Documents/JAVASCRIPT/PROYECTOS 2020/MDLinks/SCL014-md-links/SCL014-MD-LINKS';
-
-const fixePathToAbsolute = path.normalize(path.resolve(myPath));
-console.log(fixePathToAbsolute)
+import path from'path';
+import fs from'fs';
+import marked from'marked';
+const renderer = new marked.Renderer();
+import fetch from 'node-fetch';
 
 
 
-// me trae los  archivos md solo me  trae archivos  con rutas   correctas  <------------revisar historia  ultima
-const fileMD = (fixePathToAbsolute)=> {
-   fs.readdir(fixePathToAbsolute, (err, files)=>{
-  if(err){
-    console.error(`Code: ${err.code}\n message: ${err.message}`)
-  }else{
-  files.forEach(file =>{
-    if(file.includes('.md')){
-      console.log(file)
-      return file
+
+//***********************************PRUEBAS**********************************
+
+let fs = require('fs');
+let path = require('path')
+const arg = require("./index");
+const readingFiles = require("./readingFiles");
+
+/*
+RECIBIENDO ARGUMENDOS DE LA LÍNEA DE COMANDO:
+FUNCIÓN QUE IDENTIFICA SI LA RUTA INGRESADA EN CLI
+ES DE UN ARCHIVO O DE UN DIRECTORIO:
+*/
+
+
+const gettingPath = (arg) => {
+  let mdFiles = [];
+  fs.stat(arg, (err, stats) => {
+    if (err) {
+      console.err(); //consolear error
+      return;
     }
-  })
-}
-})}
+    if (stats.isDirectory() == true) {
+      let files = fs.readdirSync(arg);
+      // console.log(files)
+      files.forEach(file => {
+        if (path.extname(file) === ".md") {
+          readingFiles.readingFiles(file);
+        }
+      });
+      readingFiles.readingFiles(mdFiles.toString());
+      return mdFiles;
+      // console.log(mdFiles)
+    }
+    else {
+      readingFiles.readingFiles(arg);
+      return arg;
+    }
+  });
+};
 
-fileMD();
-
-
+module.exports.gettingPath = gettingPath
